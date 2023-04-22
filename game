@@ -1,0 +1,124 @@
+from tkinter import *
+from tkinter import ttk
+import random
+
+root = Tk()
+root.title("Word")
+canvas = Canvas(root, width=600, height=600)
+canvas.pack()
+
+def colors():
+    y=0
+    while y<600:
+        x=0
+        while x<600:
+            canvas.create_rectangle(x,y, x+33, y+27, fill="white", outline="blue")
+            x=x+33
+        y=y+27
+
+
+rules="""Hello!!!
+Today we will play the game "Words".
+The rules are simple:
+you have to guess the word with 
+a certain number of attempts.
+Good luck!!!"""
+canvas.create_text(285,280, text=rules, fill="black", font= ("Calibri", "18"))
+words=["commerce","business","investor","mediator","services","warranty"]
+
+w1=[]
+w2=[]
+def arr():
+    colors()
+    word = random.choice(words)
+    w1 = word[1:-1]
+
+    for i in w1:
+       w2.append(i)
+       a0 = canvas.create_text(282, 40, text=word[0], fill="black", font= ("Calibri", "18"))
+       a1 = canvas.create_text(315, 40, text="_", fill="black", font= ("Calibri", "18"))
+       a2 = canvas.create_text(348, 40, text="_", fill="black", font= ("Calibri", "18"))
+       a3 = canvas.create_text(381, 40, text="_", fill="black", font= ("Calibri", "18"))
+       a4 = canvas.create_text(414, 40, text="_", fill="black", font= ("Calibri", "18"))
+       a5 = canvas.create_text(447, 40, text="_", fill="black", font= ("Calibri", "18"))
+       a7 = canvas.create_text(480, 40, text="_", fill="black", font= ("Calibri", "18"))
+       a8 = canvas.create_text(513, 40, text=word[-1], fill="black", font= ("Calibri", "18"))
+       
+
+
+#list1=[1,2,3,4,5,6]
+alfavit="abcdefghijklmnopqrstuvwxyz"
+er=[]
+win=[]
+tries=5
+def a(v, tries):
+    if v in w2:
+        while v in w2: 
+            ind = w2.index(v)
+            w2[ind] = '1'
+            b2 = ind + 1
+
+            def kord():
+                if b2==1:
+                    x1, y1 = 315,40
+                if b2==2:
+                    x1, y1 = 348,40
+                if b2==3:
+                    x1, y1 = 381,40
+                if b2==4:
+                    x1, y1 = 414,40
+                if b2==5:
+                    x1, y1 = 447,40
+                if b2==6:
+                    x1, y1 = 480,40
+                return x1, y1
+
+            x1,y1=kord()   
+            win.append(v)
+            a2=canvas.create_text(x1, y1, text = v,fill="black", font= ("Calibri", "18"))
+            btn[v]["bg"]="green"
+            flag = True
+            for i in range(6):
+                if w2[i] != '1':
+                    flag = False
+                    break
+            if flag:
+                canvas.create_text(150, 150, text="You win!!!",fill="black", font= ("Calibri", "18"))
+    else:
+        er.append(v)
+        btn[v]["bg"] = "red"
+        btn[v] ["state"]="disabled"
+        tries -= 1
+        if tries == 0:
+            canvas.create_text(150, 150, text="Game Over!!!",fill="black", font= ("Calibri", "18"))
+
+btn={}
+def gen(u,x,y):
+    btn[u]=Button (root, text=u, width=3, height=1,  command=lambda:a(u,tries))
+    btn[u].place(x=str(x),y=str(y))
+x=265
+y=110
+for i in alfavit[0:8]:
+    gen(i, x, y)
+    x+=33
+x=265
+y=137
+for i in alfavit[8:16]:
+    gen(i, x, y)
+    x+=33
+x=265
+y=164
+for i in alfavit[16:24]:
+    gen(i, x, y)
+    x+=33
+x=265
+y=191
+for i in alfavit[24:26]:
+    gen(i, x, y)
+    x+=33
+
+btn1 = Button (root, text="Go!", width=10, height=1, command=lambda: arr())
+btn1.place(x = 258, y = 542)
+btn1["bg"]="red"
+root.mainloop()
+
